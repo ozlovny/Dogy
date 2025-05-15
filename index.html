@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Профиль Telegram</title>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      padding-top: 40px;
+    }
+    .profile-container {
+      background: #222;
+      padding: 20px 30px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+      width: 320px;
+    }
+    .profile-container img {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 2px solid #00aaff;
+    }
+    .profile-container h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      word-break: break-word;
+    }
+    .profile-container p {
+      margin: 0;
+      font-size: 14px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <img id="profile-photo" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Аватар пользователя" />
+    <h2 id="profile-username">Загрузка...</h2>
+    <p id="profile-userid"></p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tg = window.Telegram?.WebApp;
+      const usernameElem = document.getElementById('profile-username');
+      const photoElem = document.getElementById('profile-photo');
+      const userIdElem = document.getElementById('profile-userid');
+
+      if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const user = tg.initDataUnsafe.user;
+
+        if (user.username) {
+          usernameElem.textContent = '@' + user.username;
+        } else if (user.first_name) {
+          usernameElem.textContent = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+        } else {
+          usernameElem.textContent = 'Пользователь';
+        }
+
+        userIdElem.textContent = `ID: ${user.id}`;
+
+        // Автора Telegram WebApp не даёт, используем заглушку
+        photoElem.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+
+      } else {
+        usernameElem.textContent = 'Гость';
+        userIdElem.textContent = '';
+        photoElem.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+      }
+    });
+  </script>
+</body>
+</html>
