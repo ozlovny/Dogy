@@ -46,7 +46,7 @@
 </head>
 <body>
   <div class="profile-container">
-    <img id="profile-photo" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Аватар пользователя" />
+    <img id="profile-photo" src="" alt="Аватар пользователя" />
     <h2 id="profile-username">Загрузка...</h2>
     <p id="profile-userid"></p>
   </div>
@@ -71,13 +71,12 @@
 
         userIdElem.textContent = `ID: ${user.id}`;
 
-        // Автора Telegram WebApp не даёт, используем заглушку
-        photoElem.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-
+        // Не устанавливаем src, чтобы не было заглушки
+        photoElem.src = '';
       } else {
         usernameElem.textContent = 'Гость';
         userIdElem.textContent = '';
-        photoElem.src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+        photoElem.src = '';
       }
     });
   </script>
